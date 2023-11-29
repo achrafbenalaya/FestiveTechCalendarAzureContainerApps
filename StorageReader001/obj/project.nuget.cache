@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "x4zoyJoVOQgB8vJhfkn4w3LHoUf6Wg38mj7fE/mrqG7hV56ih6u0bb04CGPeWZhKRmGk4Kc4xQ/nDBP4GDVL/w==",
+  "success": true,
+  "projectFilePath": "C:\\Achraf\\JohnMcClane\\MattFarrell\\Online\\SessionSizeCodeSource\\StorageReader001\\StorageReader001.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\benalaya.a\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.4\\microsoft.visualstudio.azure.containers.tools.targets.1.19.4.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Set a light background color */
+        }
+
+        .center-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* Set the container height to 100% of the viewport height */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="center-container">
+        <img src="https://festivetechcalendar.com/assets/images/MicrosoftTeams-imagesmall.png" alt="Festive Image" style="width: 600px; height: 400px; margin-bottom: 20px;">
+
+
+        <div class="text-center">
+            <h1 class="display-4" style="text-align: center;">Upload Your Data</h1>
+
+            @using (Html.BeginForm("UploadFile", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <input type="file" name="upload" class="form-control" />
+
+                <br />
+                <button class="btn btn-primary" type="submit">Upload</button>
+            }
+        </div>
+    </div>
+
+</body>
+</html>
