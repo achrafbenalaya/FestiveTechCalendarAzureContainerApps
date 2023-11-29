@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "uyO0Csq4vBmtahm4D7v3h134ONHGFEYHcxJADDDYEAFciwjwoCCZJRn6ohQ0tFi2Der9eatJy/H3aV7zuJYu3w==",
+  "success": true,
+  "projectFilePath": "C:\\Achraf\\JohnMcClane\\MattFarrell\\Online\\SessionSizeCodeSource\\hunterxhunterfrontend\\hunterxhunterfrontend.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\benalaya.a\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.4\\microsoft.visualstudio.azure.containers.tools.targets.1.19.4.nupkg.sha512",
+    "C:\\Users\\benalaya.a\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
