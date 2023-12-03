@@ -11,6 +11,8 @@ namespace hunterxhunterfrontend.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IHttpClientFactory _clientFactory;
         private readonly string _hxhApiUrl;
+        private string containersecret;
+        private string secretfromkeyvault;
 
 
         public HomeController(ILogger<HomeController> logger, IOptions<hxhApiOptions> hxhoptions, IHttpClientFactory clientFactory)
@@ -33,6 +35,10 @@ namespace hunterxhunterfrontend.Controllers
                 {
                     var apiResponse = await response.Content.ReadAsStringAsync();
                     hunterlist = JsonConvert.DeserializeObject<List<hxhmodel>>(apiResponse);
+
+
+                    containersecret = Environment.GetEnvironmentVariable("containersecret");
+                    secretfromkeyvault = Environment.GetEnvironmentVariable("secretfromkeyvault");
                 }
                 else
                 {
@@ -48,6 +54,9 @@ namespace hunterxhunterfrontend.Controllers
                 // Consider returning a user-friendly error page/view to the user
                 // return View("Error");
             }
+
+            ViewData["containersecret"] = containersecret;
+            ViewData["secretfromkeyvault"] = secretfromkeyvault;
 
             return View(hunterlist);
 

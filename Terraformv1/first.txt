@@ -1,0 +1,77 @@
+provider "azurerm" {
+  features = {}
+}
+
+resource "azurerm_resource_group" "example" {
+  name     = "example-resource-group"
+  location = "East US"
+}
+
+resource "azurerm_container_registry" "example" {
+  name                     = "exampleacr"
+  resource_group_name      = azurerm_resource_group.example.name
+  location                 = azurerm_resource_group.example.location
+  sku                      = "Standard"
+  admin_enabled            = false
+}
+
+resource "azurerm_managed_identity" "example" {
+  name                = "example-mi"
+  resource_group_name = azurerm_resource_group.example.name
+}
+
+resource "azurerm_role_assignment" "acr_pull" {
+  scope                = azurerm_container_registry.example.id
+  role_definition_name = "AcrPull"
+  principal_id         = azurerm_managed_identity.example.principal_id
+}
+
+resource "azurerm_container_app" "internal" {
+  name                = "internal-container-app"
+  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.example.location
+  container_image     = "your-internal-image:tag"
+  internal_network    = true
+
+  acr {
+    registry_login_server = azurerm_container_registry.example.login_server
+    registry_username     = azurerm_container_registry.example.admin_username
+    registry_password     = azurerm_container_registry.example.admin_password
+  }
+
+  logs {
+    azure_monitor {
+      workspace_id = "your-log-analytics-workspace-id"
+    }
+  }
+
+  identity {
+    type                     = "UserAssigned"
+    identity_ids             = [azurerm_managed_identity.example.id]
+  }
+}
+
+resource "azurerm_container_app" "external" {
+  name                = "external-container-app"
+  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.example.location
+  container_image     = "your-external-image:tag"
+  internal_network    = false
+
+  acr {
+    registry_login_server = azurerm_container_registry.example.login_server
+    registry_username     = azurerm_container_registry.example.admin_username
+    registry_password     = azurerm_container_registry.example.admin_password
+  }
+
+  logs {
+    azure_monitor {
+      workspace_id = "your-log-analytics-workspace-id"
+    }
+  }
+
+  identity {
+    type                     = "UserAssigned"
+    identity_ids             = [azurerm_managed_identity.example.id]
+  }
+}
