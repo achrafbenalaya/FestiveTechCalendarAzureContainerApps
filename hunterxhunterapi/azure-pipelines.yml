@@ -1,0 +1,50 @@
+trigger:
+- master
+
+resources:
+- repo: self
+
+variables:  
+  IMAGE_NAME: hunterxhunterapi
+  CONTAINERAPPS_APP: cp-backend-hxh
+  CONTAINERAPPS_ENVIRONMENT: env-festivetech
+  RESOURCE_GROUP: rg-festivetechcalendar
+  TAG: '$(Build.BuildId)'
+
+stages:
+- stage: Build
+  displayName: Build and push image
+  jobs:
+  - job: Build
+    displayName: buildAndPush to ACR
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'acr-festivtech-spn'
+        repository: 'hunterxhunterapi'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        tags: '$(TAG)'
+
+- stage: Deploy
+  displayName: Deploy to Container Apps
+  jobs:
+  - job: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+
+    - task: AzureContainerApps@1
+      displayName: Deploying new container version
+      inputs:
+        azureSubscription: 'festivetechcnx'
+        imageToDeploy: 'acrfestivetechdev.azurecr.io/hunterxhunterapi:$(TAG)'
+        containerAppName: '$(CONTAINERAPPS_APP)'
+        resourceGroup: '$(RESOURCE_GROUP)'
+        containerAppEnvironment: '$(CONTAINERAPPS_ENVIRONMENT)'
+        targetPort: '3500'
+        ingress: 'external'
